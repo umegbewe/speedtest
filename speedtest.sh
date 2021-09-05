@@ -33,16 +33,21 @@ ip_info() {
 
 system_info() {
     cpu=$( sed -n '5p' /proc/cpuinfo | cut -d " " -f 3-60 )  ## model name
-    
+    os=$( sed -ne '/PRETTY_NAME/p' /etc/os-release | sed 's/PRETTY_NAME=//' | tr -d '"' ) ## os
+    kern=$( uname -r ) ## kernel
+    upt=$( uptime -p | cut -d " " -f2- ) ##uptime
     echo ${WHITE}"---------------------------------------------------------------------------"
     echo ${WHITE}"                                  SYSTEM                         "
     echo ""
     echo " CPU Model             : $cpu"
+    echo " OS                    : $os"
+    echo " Kernel                : $kern"
+    echo " Uptime                : $upt"
     echo ${WHITE}"---------------------------------------------------------------------------"
-    
-    
-    
-    
+
+
+
+
 }
 
 ip_info
