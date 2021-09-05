@@ -20,3 +20,30 @@ exit_on_signal_SIGTERM() {
 
 trap exit_on_signal_SIGINT SIGINT
 trap exit_on_signal_SIGTERM SIGTERM
+
+ip_info() {
+    local org="$(wget -q -O- ipinfo.io/org)"
+    local city="$(wget -q -O- ipinfo.io/city)"
+    local country="$(wget -q -O- ipinfo.io/country)"
+    local region="$(wget -q -O- ipinfo.io/region)"
+    [[ -n "$org" ]] && echo " Network          : ${BLUE}( "$org")"
+    [[ -n "$city" && -n "country" ]] && echo ${WHITE}" Location              : ${BLUE}( "$city / $country")"
+    [[ -n "$region" ]] && echo ${WHITE}" Region                : ${BLUE}( "$region")"
+}
+
+system_info() {
+    cpu=$( sed -n '5p' /proc/cpuinfo | cut -d " " -f 3-60 )  ## model name
+    
+    echo ${WHITE}"---------------------------------------------------------------------------"
+    echo ${WHITE}"                                  SYSTEM                         "
+    echo ""
+    echo " CPU Model             : $cpu"
+    echo ${WHITE}"---------------------------------------------------------------------------"
+    
+    
+    
+    
+}
+
+ip_info
+system_info
