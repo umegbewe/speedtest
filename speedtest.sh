@@ -21,9 +21,9 @@ exit_on_signal_SIGTERM() {
 trap exit_on_signal_SIGINT SIGINT
 trap exit_on_signal_SIGTERM SIGTERM
 
-currentTime=$(date "+%H:%M:%S on %Y-%m-%d")
+Time=$(date "+%H:%M:%S on %A %Y-%m-%d")
 
-echo 'Starting SpeedTest check at' $currentTime
+echo 'Starting speedtest.sh at' $Time
 
 ip_info() {
     local org="$(wget -q -O- ipinfo.io/org)"
