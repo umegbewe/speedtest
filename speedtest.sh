@@ -21,34 +21,21 @@ exit_on_signal_SIGTERM() {
 trap exit_on_signal_SIGINT SIGINT
 trap exit_on_signal_SIGTERM SIGTERM
 
+currentTime=$(date "+%H:%M:%S on %Y-%m-%d")
+
+echo 'Starting SpeedTest check at' $currentTime
+
 ip_info() {
     local org="$(wget -q -O- ipinfo.io/org)"
     local city="$(wget -q -O- ipinfo.io/city)"
     local country="$(wget -q -O- ipinfo.io/country)"
     local region="$(wget -q -O- ipinfo.io/region)"
-    [[ -n "$org" ]] && echo " Network          : ${BLUE}( "$org")"
-    [[ -n "$city" && -n "country" ]] && echo ${WHITE}" Location              : ${BLUE}( "$city / $country")"
-    [[ -n "$region" ]] && echo ${WHITE}" Region                : ${BLUE}( "$region")"
-}
-
-system_info() {
-    cpu=$( sed -n '5p' /proc/cpuinfo | cut -d " " -f 3-60 )  ## model name
-    os=$( sed -ne '/PRETTY_NAME/p' /etc/os-release | sed 's/PRETTY_NAME=//' | tr -d '"' ) ## os
-    kern=$( uname -r ) ## kernel
-    upt=$( uptime -p | cut -d " " -f2- ) ##uptime
-    echo ${WHITE}"---------------------------------------------------------------------------"
-    echo ${WHITE}"                                  SYSTEM                         "
+    
     echo ""
-    echo " CPU Model             : $cpu"
-    echo " OS                    : $os"
-    echo " Kernel                : $kern"
-    echo " Uptime                : $upt"
-    echo ${WHITE}"---------------------------------------------------------------------------"
-
-
-
-
+    echo ${WHITE}" ISP           : ${BLUE}"$org""
+    echo ${WHITE}" Location      : ${BLUE}( "$city / $country")"
+    echo ${WHITE}" Region        : ${BLUE}( "$region")"
 }
+
 
 ip_info
-system_info
