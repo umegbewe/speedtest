@@ -30,11 +30,17 @@ ip_info() {
     local city="$(wget -q -O- ipinfo.io/city)"
     local country="$(wget -q -O- ipinfo.io/country)"
     local region="$(wget -q -O- ipinfo.io/region)"
+    local ipaddr="$(wget -q -O- ipinfo.io/ip)"
+    local timez="$(wget -q -O- ipinfo.io/timezone)"
+    
     
     echo ""
     echo ${WHITE}" ISP           : ${BLUE}"$org""
-    echo ${WHITE}" Location      : ${BLUE}( "$city / $country")"
-    echo ${WHITE}" Region        : ${BLUE}( "$region")"
+    echo ${WHITE}" Location      : ${BLUE}"$city / $country""
+    echo ${WHITE}" Region        : ${BLUE}"$region""
+    echo ${WHITE}" IP Address    : ${BLUE}"$ipaddr""
+    echo ${WHITE}" Timezone      : ${BLUE}"$timez""
+    
 }
 
 
