@@ -21,27 +21,36 @@ exit_on_signal_SIGTERM() {
 trap exit_on_signal_SIGINT SIGINT
 trap exit_on_signal_SIGTERM SIGTERM
 
+## Reset terminal colors
+reset_color() {
+	tput sgr0   # reset attributes
+	tput op     # reset color
+    return
+}
+
+
 Time=$(date "+%H:%M:%S on %A %Y-%m-%d")
 
 echo 'Starting speedtest.sh at' $Time
 
 ip_info() {
-    local org="$(wget -q -O- ipinfo.io/org)"
+    local isp="$(wget -q -O- ipinfo.io/org)"
     local city="$(wget -q -O- ipinfo.io/city)"
     local country="$(wget -q -O- ipinfo.io/country)"
     local region="$(wget -q -O- ipinfo.io/region)"
     local ipaddr="$(wget -q -O- ipinfo.io/ip)"
     local timez="$(wget -q -O- ipinfo.io/timezone)"
     
-    
-    echo ""
-    echo ${WHITE}" ISP           : ${BLUE}"$org""
-    echo ${WHITE}" Location      : ${BLUE}"$city / $country""
-    echo ${WHITE}" Region        : ${BLUE}"$region""
-    echo ${WHITE}" IP Address    : ${BLUE}"$ipaddr""
-    echo ${WHITE}" Timezone      : ${BLUE}"$timez""
-    
+ printf "%-70s\n" "-" | sed 's/\s/-/g'
+ 
+    echo ${WHITE}" ISP           : ${ORANGE}"$isp""
+    echo ${WHITE}" Location      : ${ORANGE}"$city / $country""
+    echo ${WHITE}" Region        : ${ORANGE}"$region""
+    echo ${WHITE}" IP Address    : ${ORANGE}"$ipaddr""
+    echo ${WHITE}" Timezone      : ${ORANGE}"$timez""; reset_color
+ printf "%-70s\n" "-" | sed 's/\s/-/g'    
 }
+
 
 
 ip_info
