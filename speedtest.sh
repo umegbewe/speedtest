@@ -28,10 +28,24 @@ reset_color() {
     return
 }
 
+mem=$( mktemp /tmp/speedtest.XXXXXXXX )
+
+speedtest='https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py'
+
+curl --silent $speedtest > $mem
+
+chmod 755 $mem
 
 Time=$(date "+%H:%M:%S on %A %Y-%m-%d")
 
-echo 'Starting speedtest.sh at' $Time
+logfile="speedtest-log"
+
+
+deletetmp() {
+    rm -f $mem
+}
+
+
 
 ip_info() {
     local isp="$(wget -q -O- ipinfo.io/org)"
@@ -43,14 +57,25 @@ ip_info() {
     
  printf "%-70s\n" "-" | sed 's/\s/-/g'
  
+    echo 'Starting speedtest.sh at' $Time
+    
     echo ${WHITE}" ISP           : ${ORANGE}"$isp""
     echo ${WHITE}" Location      : ${ORANGE}"$city / $country""
     echo ${WHITE}" Region        : ${ORANGE}"$region""
     echo ${WHITE}" IP Address    : ${ORANGE}"$ipaddr""
     echo ${WHITE}" Timezone      : ${ORANGE}"$timez""; reset_color
+    $mem --simple
  printf "%-70s\n" "-" | sed 's/\s/-/g'    
 }
 
+logging() {
+    if [[ $@ == --log ]]; then
+    ip_info >> $logfile 
+    else
+    echo "Unknown Parameter"
+    fi
+}
 
-
-ip_info
+ip_info 
+logging --log
+deletetmp
