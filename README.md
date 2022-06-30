@@ -76,5 +76,4 @@ this would run speedtest.sh every day at 6am
 
 please refer to https://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/ to learn more about cron jobs
 
-## Thanks
-Thanks to [sivel](https://github.com/sivel) his project [speedtest-cli](https://github.com/sivel/speedtest-cli) made this possible. Found this useful? Star the repo and follow me on [Twitter](https://twitter.com/nwebedu_junior). Thanks :heart:
+## Great
